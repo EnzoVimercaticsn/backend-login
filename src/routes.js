@@ -11,6 +11,7 @@ routes.get('/', raizControllers.raiz);
 routes.get('/usuarios', cadastroControler.searchcadastroAllCod);
 routes.get('/usuarios/nome', cadastroControler.searchcadastroAllNome);
 routes.get('/usuarios/buscar/:nome', cadastroControler.searchcadastroByNome);
+routes.get('/usuarios/matric/:nome', cadastroControler.searchcadastroByemail);
 
 // Rotas cadastro - POST, PUT, DELETE
 routes.post('/usuarios', cadastroControler.createcadastro);
