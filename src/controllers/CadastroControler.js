@@ -22,13 +22,13 @@ module.exports = {
     async searchcadastroByNome(req, res) {
         try {
             const { nome } = req.params;
-            const result = await knex('usuario').where('usu_matricula', 'ilike', `%${nome}%`);
+            const result = await knex('usuario').where('usu_nome', 'ilike', `%${nome}%`);
             if (result.length === 0) {
-                return res.status(404).send({ msg: 'Matrícula não encontrado' });
+                return res.status(404).send({ msg: 'Usuário não encontrado' });
             }
             return res.status(200).send(result);
         } catch (error) {
-            return res.status(500).send({ msg: 'Erro ao buscar matrícula', error: error.message });
+            return res.status(500).send({ msg: 'Erro ao buscar usuário', error: error.message });
         }
     },
 
