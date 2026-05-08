@@ -68,28 +68,18 @@ module.exports = {
     },
 
     async updatecadastro(req, res) {
-        try {
-            const { usu_matricula } = req.params; 
-            const { usu_nome, usu_senha } = req.body;
+        const { id } = req.params; 
+        const { usu_matricula, usu_nome, usu_senha, isadm } = req.body;
 
-            if (!usu_nome && !usu_senha) {
-                return res.status(400).send({ msg: 'Informe pelo menos um campo para atualizar' });
-            }
+        const data = {
+           usu_matricula,
+            usu_nome,
+            usu_senha,
+            isadm
+        };
 
-            const data = {};
-            if (usu_nome) data.usu_nome = usu_nome;
-            if (usu_senha) data.usu_senha = usu_senha;
-
-            const updated = await knex('usuario').update(data).where({ usu_matricula });
-            
-            if (updated === 0) {
-                return res.status(404).send({ msg: 'Usuário não encontrado' });
-            }
-
-            return res.status(200).send({ msg: 'Usuário atualizado com sucesso!' });
-        } catch (error) {
-            return res.status(500).send({ msg: 'Erro ao atualizar usuário', error: error.message });
-        }
+        await knex('usuario').update(data).where({ usu_matricula: id });
+        return res.status(200).send({ msg: 'Atualização efetuada com sucesso!' });
     },
 
     async deletecadastro(req, res) {
