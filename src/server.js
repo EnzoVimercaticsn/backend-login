@@ -3,13 +3,21 @@ const routes = require('./routes');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
+// Configuração CORS robusta
+const corsOptions = {
+  origin: ['http://127.0.0.1:5501', 'http://localhost:5501', 'http://localhost:3000', 'http://localhost:5500'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Headers adicionais de segurança (opcional)
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('X-Content-Type-Options', 'nosniff');
   next();
 });
 
